@@ -28,13 +28,13 @@ npm.cmd run build
 npm run build
 ```
 
-构建会直接更新网站目录中的 HTML。执行结束后会显示扫描页数和实际更新页数；
-连续运行两次时，第二次应显示 `updated 0`。
+所有网站文件都位于 `src/`，没有第二份生成副本。构建会直接更新 `src/` 中
+标有 `AUTO` 的导航区域；连续运行两次时，第二次应显示 `updated 0`。
 
 ## 新建文件夹
 
-1. 使用英文路径名创建目录，例如 `demo/reading-notes/`。
-2. 将 `templates/folder.html` 复制为该目录的 `index.html`。
+1. 在 `src/` 中使用英文路径名创建目录，例如 `src/demo/reading-notes/`。
+2. 将 `src/templates/folder.html` 复制为该目录的 `index.html`。
 3. 修改其中唯一的 `<h1 data-page-title>`，它可以是中文。
 4. 运行构建命令。
 
@@ -48,8 +48,8 @@ npm run build
 
 ## 新建文章
 
-1. 使用英文路径名创建文章目录，例如 `demo/reading-notes/my-first-note/`。
-2. 将 `templates/post.html` 复制为该目录的 `index.html`。
+1. 在 `src/` 中使用英文路径名创建文章目录，例如 `src/demo/reading-notes/my-first-note/`。
+2. 将 `src/templates/post.html` 复制为该目录的 `index.html`。
 3. 修改 `<h1 data-page-title>`、`datetime` 日期和正文。
 4. 运行构建命令。
 
@@ -79,8 +79,8 @@ npm run build
 - `<h1 data-page-title>` 中的中文名称
 - 文章日期和正文
 - 英文目录名称
-- `site.config.mjs` 中的全站文字变量
-- `assets/styles.css` 中的颜色变量
+- `src/site.config.mjs` 中的全站文字变量
+- `src/assets/styles.css` 中的颜色变量
 
 不要手工修改这些注释之间的内容，因为每次构建都会覆盖：
 
@@ -98,7 +98,11 @@ npm run build
 ## 当前目录
 
 ```text
-/
+src/
+├── assets/
+├── templates/
+├── site.config.mjs
+├── index.html
 ├── uncategorized/                 # Uncategorized（空）
 ├── film-reviews/                  # 影评（8 篇）
 ├── reflections/                   # 感受（1 篇）
@@ -132,10 +136,10 @@ npm.cmd run build
 
 ## 本地预览
 
-构建后，在仓库目录运行任意静态文件服务器，例如：
+构建后，在仓库目录运行静态文件服务器，并把 `src` 设为网站根目录：
 
 ```sh
-python -m http.server 8000
+python -m http.server 8000 --directory src
 ```
 
 然后访问 `http://localhost:8000/`。

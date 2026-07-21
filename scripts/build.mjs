@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import config from "../site.config.mjs";
+import config from "../src/site.config.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDirectory, "..");
+const sourceRoot = path.join(siteRoot, "src");
 const ignoredDirectories = new Set(config.ignoredDirectories);
 
 function toUrlPath(filePath) {
@@ -49,7 +50,7 @@ function readAttribute(tag, name) {
   return match?.[1] ?? null;
 }
 
-function discoverPages(directory = siteRoot) {
+function discoverPages(directory = sourceRoot) {
   const pages = [];
 
   function visit(currentDirectory) {
@@ -73,7 +74,7 @@ function discoverPages(directory = siteRoot) {
 function readPage(filePath) {
   const html = fs.readFileSync(filePath, "utf8");
   const directory = path.dirname(filePath);
-  const relativeDirectory = toUrlPath(path.relative(siteRoot, directory));
+  const relativeDirectory = toUrlPath(path.relative(sourceRoot, directory));
   const bodyTag = html.match(/<body\b[^>]*>/i)?.[0];
   const headingMatch = html.match(/<h1\b[^>]*\bdata-page-title\b[^>]*>([\s\S]*?)<\/h1>/i);
 
@@ -333,20 +334,32 @@ function buildPage(page, pages, byDirectory) {
   return output;
 }
 
+function writeIfChanged(filePath, content) {
+  if (fs.existsSync(filePath)) {
+    const current = fs.readFileSync(filePath);
+    const next = Buffer.isBuffer(content) ? content : Buffer.from(content, "utf8");
+    if (current.equals(next)) return false;
+  }
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content);
+  return true;
+}
+
 function main() {
+  if (!fs.existsSync(sourceRoot)) {
+    throw new Error("src directory is missing.");
+  }
+
   const pages = discoverPages();
   const byDirectory = validateTree(pages);
   let changed = 0;
 
   for (const page of pages) {
     const output = buildPage(page, pages, byDirectory);
-    if (output !== page.html) {
-      fs.writeFileSync(page.filePath, output, "utf8");
-      changed += 1;
-    }
+    if (writeIfChanged(page.filePath, output)) changed += 1;
   }
 
-  console.log(`Built ${pages.length} pages; updated ${changed}.`);
+  console.log(`Built ${pages.length} pages in src; updated ${changed}.`);
 }
 
 try {

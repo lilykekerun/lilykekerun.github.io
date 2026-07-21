@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDirectory, "..");
+const sourceRoot = path.join(siteRoot, "src");
 const xmlPath = path.resolve(siteRoot, process.argv[2] ?? "");
 
 const categorySlugs = new Map([
@@ -159,8 +160,8 @@ function assertAvailable(targetPath) {
     throw new Error(`Target already exists: ${path.relative(siteRoot, targetPath)}`);
   }
   const resolvedParent = path.resolve(path.dirname(targetPath));
-  if (!resolvedParent.startsWith(`${siteRoot}${path.sep}`) && resolvedParent !== siteRoot) {
-    throw new Error(`Target escapes site root: ${targetPath}`);
+  if (!resolvedParent.startsWith(`${sourceRoot}${path.sep}`) && resolvedParent !== sourceRoot) {
+    throw new Error(`Target escapes src: ${targetPath}`);
   }
 }
 
@@ -172,8 +173,8 @@ function main() {
   const xml = fs.readFileSync(xmlPath, "utf8");
   const categories = parseCategories(xml);
   const posts = parsePosts(xml);
-  const folderTemplate = fs.readFileSync(path.join(siteRoot, "templates", "folder.html"), "utf8");
-  const postTemplate = fs.readFileSync(path.join(siteRoot, "templates", "post.html"), "utf8");
+  const folderTemplate = fs.readFileSync(path.join(sourceRoot, "templates", "folder.html"), "utf8");
+  const postTemplate = fs.readFileSync(path.join(sourceRoot, "templates", "post.html"), "utf8");
   const categoryPaths = new Map();
   const plannedFiles = [];
 
@@ -183,7 +184,7 @@ function main() {
     }
     const slug = categorySlugs.get(category.name);
     if (!slug) throw new Error(`Missing English category slug for: ${category.name}.`);
-    const filePath = path.join(siteRoot, slug, "index.html");
+    const filePath = path.join(sourceRoot, slug, "index.html");
     assertAvailable(filePath);
     categoryPaths.set(category.name, path.dirname(filePath));
     plannedFiles.push({ filePath, html: renderFolder(folderTemplate, category) });
