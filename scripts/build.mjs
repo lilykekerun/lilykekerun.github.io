@@ -146,6 +146,9 @@ function childrenOf(page, pages) {
   return pages
     .filter((candidate) => candidate.parentDirectory === page.relativeDirectory)
     .sort((left, right) => {
+      if (left.type === "post" && right.type === "post" && left.date !== right.date) {
+        return right.date.localeCompare(left.date);
+      }
       if (left.order !== right.order) return left.order - right.order;
       return left.slug.localeCompare(right.slug, "en", { numeric: true });
     });
@@ -200,6 +203,13 @@ function formatTypeCount(count, type) {
   return `${String(count).padStart(2, "0")} ${label}`;
 }
 
+function formatDateTime(value) {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::\d{2})?)?/);
+  if (!match) return value;
+  const date = `${match[1]}.${match[2]}.${match[3]}`;
+  return match[4] ? `${date} ${match[4]}:${match[5]}` : date;
+}
+
 function renderFolderGrid(page, folders, pages) {
   const cards = folders.map((folder) => {
     const href = linkFrom(page, folder.relativeDirectory);
@@ -225,7 +235,7 @@ function renderPostList(page, posts) {
   const rows = posts.map((post) => {
     const href = linkFrom(page, post.relativeDirectory);
     const time = post.date
-      ? `\n    <time class="post-date" datetime="${escapeHtml(post.date)}">${escapeHtml(post.date.replaceAll("-", "."))}</time>`
+      ? `\n    <time class="post-date" datetime="${escapeHtml(post.date)}">${escapeHtml(formatDateTime(post.date))}</time>`
       : "";
     return [
       `  <a class="post-row" href="${escapeHtml(href)}">`,
@@ -296,7 +306,7 @@ function updatePageMetadata(html, page) {
   if (page.type === "post" && page.date) {
     output = output.replace(
       /(<time\b[^>]*\bdatetime\s*=\s*["'][^"']+["'][^>]*>)[\s\S]*?<\/time>/i,
-      `$1${escapeHtml(page.date.replaceAll("-", "."))}</time>`
+      `$1${escapeHtml(formatDateTime(page.date))}</time>`
     );
   }
 

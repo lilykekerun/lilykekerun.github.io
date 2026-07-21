@@ -64,8 +64,9 @@ npm run build
 
 日期显示文字会根据 `datetime="2026-07-21"` 自动生成为 `2026.07.21`，不需要维护两份日期。
 
-文件夹或文章的显示顺序默认按英文路径名排列。需要手动排序时，可以在
-`<body>` 上添加数字：
+文章列表默认按照 WordPress 的完整发布时间 `<time datetime="YYYY-MM-DDTHH:mm:ss">`
+从新到旧排列，并显示到分钟。文件夹默认按
+英文路径名排列；需要手动调整文件夹顺序时，可以在 `<body>` 上添加数字：
 
 ```html
 <body data-page-type="post" data-page-order="10">

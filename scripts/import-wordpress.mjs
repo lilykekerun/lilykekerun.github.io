@@ -83,7 +83,7 @@ function parsePosts(xml) {
         type: field(itemXml, "wp:post_type"),
         status: field(itemXml, "wp:status"),
         title: field(itemXml, "title"),
-        date: field(itemXml, "wp:post_date").slice(0, 10),
+        date: field(itemXml, "wp:post_date").replace(" ", "T"),
         content: field(itemXml, "content:encoded"),
         categories: categoriesFrom(itemXml)
       };
@@ -150,7 +150,7 @@ function renderPost(template, post) {
   return template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title} — lilykekerun</title>`)
     .replace(/(<h1\b[^>]*data-page-title[^>]*>)[\s\S]*?(<\/h1>)/, `$1${title}$2`)
-    .replace(/<time\b[^>]*datetime="[^"]*"[^>]*>[\s\S]*?<\/time>/, `<time datetime="${escapeHtml(post.date)}">${escapeHtml(post.date.replaceAll("-", "."))}</time>`)
+    .replace(/<time\b[^>]*datetime="[^"]*"[^>]*>[\s\S]*?<\/time>/, `<time datetime="${escapeHtml(post.date)}">${escapeHtml(post.date.slice(0, 10).replaceAll("-", ".") + " " + post.date.slice(11, 16))}</time>`)
     .replace(/(<article class="article-body">)[\s\S]*?(<\/article>)/, `$1\n${indent(content, 8)}\n      $2`);
 }
 
