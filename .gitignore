@@ -207,6 +207,10 @@ tempCodeRunnerFile.py
 node_modules/
 npm-debug.log*
 
+# Local article inbox (keep its instructions)
+inbox/*.md
+!inbox/README.md
+
 # Ruff stuff:
 .ruff_cache/
 

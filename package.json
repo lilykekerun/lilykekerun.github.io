@@ -4,6 +4,10 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "new-post": "node scripts/new-post.mjs",
     "import:wordpress": "node scripts/import-wordpress.mjs ../ref/lilykekerun.WordPress.2026-07-21.xml"
+  },
+  "dependencies": {
+    "markdown-it": "^14.3.0"
   }
 }
