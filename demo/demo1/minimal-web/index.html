@@ -8,7 +8,7 @@
     <script>document.documentElement.dataset.theme=localStorage.getItem("lilykekerun-theme")||"light";</script>
     <link rel="stylesheet" href="../../../assets/styles.css">
   </head>
-  <body>
+  <body data-page-type="post">
     <div class="site-shell">
       <header class="site-header">
         <a class="site-name" href="../../../index.html">lilykekerun</a>
@@ -21,8 +21,10 @@
 
     <main>
       <header class="article-header">
-        <p class="breadcrumb"><a href="../index.html">notes</a> / post</p>
-        <h1 class="article-title">搭一个很小的网站</h1>
+        <!-- AUTO:BREADCRUMB:START -->
+        <p class="breadcrumb"><a href="../../../index.html">home</a> / <a href="../../index.html">demo</a> / <a href="../index.html">demo1</a> / minimal-web</p>
+        <!-- AUTO:BREADCRUMB:END -->
+        <h1 class="article-title" data-page-title>搭一个很小的网站</h1>
         <p class="article-meta"><time datetime="2026-07-21">2026.07.21</time> · 4 min read</p>
       </header>
 
@@ -81,7 +83,9 @@ function setTheme(theme) {
     <div class="site-shell">
       <footer class="site-footer">
         <span>© lilykekerun</span>
-        <a href="../index.html">← back to notes</a>
+        <!-- AUTO:BACKLINK:START -->
+        <a href="../index.html">← back to demo1</a>
+        <!-- AUTO:BACKLINK:END -->
       </footer>
     </div>
     <script src="../../../assets/theme.js"></script>

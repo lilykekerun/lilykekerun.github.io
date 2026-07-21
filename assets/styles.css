@@ -115,7 +115,14 @@ a:hover {
   color: var(--color-muted);
   font-size: 0.75rem;
   letter-spacing: 0.08em;
+}
+
+.eyebrow {
   text-transform: uppercase;
+}
+
+.breadcrumb {
+  text-transform: none;
 }
 
 .breadcrumb a {
@@ -212,6 +219,14 @@ a:hover {
   border-top: 1px solid var(--color-border);
 }
 
+.empty-state {
+  margin: 0 0 90px;
+  border-top: 1px solid var(--color-border);
+  padding: 24px 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
 .post-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -289,6 +304,17 @@ a:hover {
 .article-body li > ol {
   margin-top: 0.35em;
   margin-bottom: 0.45em;
+}
+
+.article-body blockquote {
+  margin: 2em 0;
+  border-left: 2px solid var(--color-border);
+  padding-left: 20px;
+  color: var(--color-muted);
+}
+
+.article-body blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 .article-body code {

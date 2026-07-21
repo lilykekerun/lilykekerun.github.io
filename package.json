@@ -1,0 +1,9 @@
+{
+  "name": "lilykekerun.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "import:wordpress": "node scripts/import-wordpress.mjs ../ref/lilykekerun.WordPress.2026-07-21.xml"
+  }
+}

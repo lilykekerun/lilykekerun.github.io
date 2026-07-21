@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="lilykekerun 的 notes 文章列表。">
-    <title>notes — lilykekerun</title>
+    <meta name="description" content="demo1 — lilykekerun">
+    <title>demo1 — lilykekerun</title>
     <script>document.documentElement.dataset.theme=localStorage.getItem("lilykekerun-theme")||"light";</script>
     <link rel="stylesheet" href="../../assets/styles.css">
   </head>
-  <body>
+  <body data-page-type="folder">
     <div class="site-shell">
       <header class="site-header">
         <a class="site-name" href="../../index.html">lilykekerun</a>
@@ -20,30 +20,25 @@
 
       <main>
         <section class="page-intro">
-          <p class="breadcrumb"><a href="../../index.html">home</a> / <a href="../index.html">collections</a> / folder</p>
-          <h1 class="page-title">notes</h1>
-          <p class="page-description">关于网页、工具和日常观察的短文章。</p>
+          <!-- AUTO:BREADCRUMB:START -->
+          <p class="breadcrumb"><a href="../../index.html">home</a> / <a href="../index.html">demo</a> / demo1</p>
+          <!-- AUTO:BREADCRUMB:END -->
+          <h1 class="page-title" data-page-title>demo1</h1>
+          <!-- <p class="page-description">关于网页、工具和日常观察的短文章。</p> -->
         </section>
 
+        <!-- AUTO:CHILDREN:START -->
         <div class="post-list">
           <a class="post-row" href="minimal-web/index.html">
             <span class="post-title">搭一个很小的网站</span>
             <time class="post-date" datetime="2026-07-21">2026.07.21</time>
           </a>
-          <a class="post-row" href="minimal-web/index.html">
-            <span class="post-title">代码也是一种写作</span>
-            <time class="post-date" datetime="2026-06-18">2026.06.18</time>
-          </a>
-          <a class="post-row" href="minimal-web/index.html">
-            <span class="post-title">我最近保存的五个链接</span>
-            <time class="post-date" datetime="2026-05-02">2026.05.02</time>
-          </a>
         </div>
+        <!-- AUTO:CHILDREN:END -->
       </main>
 
       <footer class="site-footer">
         <span>© lilykekerun</span>
-        <span>folder / collections / notes</span>
       </footer>
     </div>
     <script src="../../assets/theme.js"></script>
